@@ -1,0 +1,26 @@
+[
+  {
+    "name": {
+      "common": "Aruba"
+    },
+    "cca3": "ABW",
+    "borders": [],
+    "area": 180
+  },
+  {
+    "name": {
+      "common": "Afghanistan"
+    },
+    "cca3": "AFG",
+    "borders": [
+      "IRN",
+      "PAK",
+      "TKM",
+      "UZB",
+      "TJK",
+      "CHN"
+    ],
+    "area": 652230,
+    "flag": "\ud83c\udde6\ud83c\uddeb"
+  }
+]
