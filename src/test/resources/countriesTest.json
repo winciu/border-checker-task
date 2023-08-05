@@ -22,5 +22,49 @@
     ],
     "area": 652230,
     "flag": "\ud83c\udde6\ud83c\uddeb"
+  },
+  {
+    "name": {
+      "common": "Italy"
+    },
+    "cca3": "ITA",
+    "borders": [
+      "AUT",
+      "FRA",
+      "SMR",
+      "SVN",
+      "CHE",
+      "VAT"
+    ]
+  },
+  {
+    "name": {
+      "common": "Czechia",
+      "official": "Czech Republic"
+    },
+    "cca3": "CZE",
+    "borders": [
+      "AUT",
+      "DEU",
+      "POL",
+      "SVK"
+    ]
+  },
+  {
+    "name": {
+      "common": "Austria",
+      "official": "Republic of Austria"
+    },
+    "cca3": "AUT",
+    "borders": [
+      "CZE",
+      "DEU",
+      "HUN",
+      "ITA",
+      "LIE",
+      "SVK",
+      "SVN",
+      "CHE"
+    ]
   }
 ]

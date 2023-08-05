@@ -27,10 +27,10 @@ public class DataLoaderTest {
     private Path inputDataFile;
 
     @Test
-    public void shouldLoadInputData() throws IOException {
+    public void shouldLoadInputDataProperly() throws IOException {
         DataLoader dataLoader = new DataLoader(objectMapper);
         List<Country> countries = dataLoader.loadData(inputDataFile);
-        assertThat(countries, hasSize(2));
+        assertThat(countries, hasSize(5));
         Set<String> names = countries.stream().map(c->c.getName().getCommon()).collect(Collectors.toSet());
         assertThat("Afghanistan", is(in(names)));
     }

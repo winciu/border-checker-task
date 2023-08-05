@@ -2,12 +2,36 @@ package pl.rationalworks.borderchecker;
 
 import pl.rationalworks.borderchecker.model.Country;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CountryGraphBuilder {
+    private final CountryGraph graph;
 
-
-    private void buildGraph(List<Country> countries) {
-
+    public CountryGraphBuilder() {
+        graph = new CountryGraph();
     }
+
+    public CountryGraph buildGraph(List<Country> countries) {
+        countries.forEach(c -> {
+            graph.addVertex(c.getCca3(), c);
+        });
+        countries.forEach(c -> {
+            Optional<CountryGraph.Vertex> v1 = graph.getVertex(c.getCca3());
+            // v1 should always be present since was already added in the loop above
+            v1.ifPresent(vertex -> {
+                Arrays.stream(c.getBorders()).forEach(borderLabel -> {
+                    Optional<CountryGraph.Vertex> v2 = graph.getVertex(borderLabel);
+                    v2.ifPresentOrElse(v -> graph.addEdge(v1.get(), v), () -> {
+                        //this is an adjacent vertex but country definition for that label has not been loaded yet
+                        CountryGraph.Vertex addedVertex = graph.addVertex(borderLabel, null);
+                        graph.addEdge(v1.get(), addedVertex);
+                    });
+                });
+            });
+        });
+        return graph;
+    }
+
 }
