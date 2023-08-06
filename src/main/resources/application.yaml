@@ -1,0 +1,9 @@
+server:
+  port: 8088
+
+data-loader:
+  mode: local
+#  mode: remote
+  source:
+    local: /countries.json
+    remote: https://raw.githubusercontent.com/mledoze/countries/master/countries.json

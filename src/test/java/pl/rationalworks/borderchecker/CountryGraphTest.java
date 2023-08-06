@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pl.rationalworks.borderchecker.model.Country;
+import pl.rationalworks.borderchecker.service.CountryGraph;
+import pl.rationalworks.borderchecker.service.CountryGraphBuilder;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package pl.rationalworks.borderchecker;
+package pl.rationalworks.borderchecker.service;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class CountryGraph {
      * @param country associated {@link Country} instance
      * @return a new added vertex or an updated one if already present with the same label
      */
-    Vertex addVertex(String label, Country country) {
+    public Vertex addVertex(String label, Country country) {
         Vertex vertex = new Vertex(label, country);
         // if vertex with a given label is already present we need to update the associated country value (could be a null before)
         Optional<Vertex> v = getVertex(label);

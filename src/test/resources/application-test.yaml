@@ -1,0 +1,4 @@
+data-loader:
+  mode: local
+  source:
+    local: /countriesTest.json

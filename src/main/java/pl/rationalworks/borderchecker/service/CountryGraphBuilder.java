@@ -1,11 +1,13 @@
-package pl.rationalworks.borderchecker;
+package pl.rationalworks.borderchecker.service;
 
+import org.springframework.stereotype.Component;
 import pl.rationalworks.borderchecker.model.Country;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class CountryGraphBuilder {
 
     public CountryGraph buildGraph(List<Country> countries) {
