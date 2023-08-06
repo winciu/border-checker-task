@@ -42,46 +42,44 @@ public class CountryGraph {
                 .findFirst();
     }
 
-    public Route findPath(String labelFrom, String labelTo) {
+    public Route findShortestPath(String labelFrom, String labelTo) {
         Optional<Vertex> vertexFrom = getVertex(labelFrom);
         Optional<Vertex> vertexTo = getVertex(labelTo);
         if (vertexFrom.isPresent() && vertexTo.isPresent()) {
-            return findPath(vertexFrom.get(), vertexTo.get());
+            return findShortestPath(vertexFrom.get(), vertexTo.get());
         }
         return Route.EMPTY;
     }
 
-    /**
-     * Searches this graph using depth first traversal
-     *
-     * @param from {@link Vertex} instance to start from
-     * @param to   destination {@link Vertex} instance
-     * @return Set of vertices as a route between given vertices
-     */
-    private Route findPath(Vertex from, Vertex to) {
-        Set<Vertex> visited = new LinkedHashSet<>();
-        Route path = new Route();
-        Stack<Vertex> stack = new Stack<>();
-        stack.push(from);
-        while (!stack.isEmpty()) {
-            Vertex vertex = stack.pop();
-            if (!visited.contains(vertex)) {
-                visited.add(vertex);
-                Set<Vertex> adjVertices = adjVertices(vertex);
-                if (vertex.equals(to)) {
-                    path.add(vertex);
-                    return path;
-                }
-                if (adjVertices.size() > 1) {
-                    path.add(vertex);
-                }
-
-                for (Vertex v : adjVertices) {
-                    stack.push(v);
+    private Route findShortestPath(Vertex from, Vertex to) {
+        Set<Vertex> visited = new HashSet<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Map<Vertex, Vertex> previousNodes = new HashMap<>(); // map to keep track of previous node of the given node
+        queue.add(from);
+        visited.add(from);
+        while (!queue.isEmpty()) {
+            Vertex vertex = queue.poll();
+            for (Vertex neighbour : adjVertices(vertex)) {
+                if (!visited.contains(neighbour)) {
+                    visited.add(neighbour);
+                    queue.add(neighbour);
+                    previousNodes.put(neighbour, vertex);
                 }
             }
         }
-        return path;
+        // now (based on the previous nodes) we need to reconstruct the path going backwards from destination vertex
+        Route route = new Route();
+        for (Vertex v = to; v != null; v = previousNodes.get(v)){
+            route.add(v);
+        }
+        route.reverse();
+
+        // check if there is a connection between given vertices (origin and destination). This might not be true if
+        // the graph is disjoint.
+        if (route.first().equals(from)) {
+            return route;
+        }
+        return Route.EMPTY;
     }
 
     public Set<Vertex> vertices() {
@@ -114,10 +112,10 @@ public class CountryGraph {
 
     public static class Route {
         public static final Route EMPTY = new Route();
-        private final Set<Vertex> route;
+        private final List<Vertex> route;
 
         public Route() {
-            route = new LinkedHashSet<>();
+            route = new ArrayList<>();
         }
 
         public void add(Vertex vertex) {
@@ -126,6 +124,14 @@ public class CountryGraph {
 
         public String[] asListOfLabels() {
             return route.stream().map(Vertex::getLabel).toArray(String[]::new);
+        }
+
+        public void reverse() {
+            Collections.reverse(this.route);
+        }
+
+        public Vertex first() {
+            return route.get(0);
         }
     }
 }
